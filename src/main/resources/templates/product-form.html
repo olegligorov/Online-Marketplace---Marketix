@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Edit Form')}">
+</head>
+<body>
+<div th:replace="fragments/menu :: menu(${path})"></div>
+<div class="container">
+    <h3 th:text="${title}">Edit Product</h3>
+    <form th:object="${product}" method="post"
+          class="form-horizontal col-md-9 col-lg-6" enctype="multipart/form-data">
+
+        <div th:if="${product.id} != null" class="form-group row mb-3">
+            <label path="id" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{id}" id="id" name="id"
+                       class="form-control" title="Product Id" readonly>
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label for="name" class="col-sm-2 col-form-label">Product Name</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{name}" id="name" name="name"
+                       class="form-control" title="Product name" th:errorclass="field-error">
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label for="description" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{description}" id="description" name="description"
+                       class="form-control" title="Product description" th:errorclass="field-error">
+            </div>
+        </div>
+        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+           class="errors alert alert-danger offset-sm-2 col-sm-10">
+            Description should not be blank.
+        </p>
+
+        <div class="form-group row mb-3">
+            <label for="price" class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-10">
+                <input type="number" min="0" value="0" step="0.01" th:field="*{price}" id="price" name="price"
+                       class="form-control" title="Product price" th:errorclass="field-error">
+            </div>
+        </div>
+
+<!--        <div class="form-group row mb-3">-->
+<!--            <label for="rating" class="col-sm-2 col-form-label">Rating</label>-->
+<!--            <div class="col-sm-10">-->
+<!--                <input type="number" min="0" max="5" value="0" step="0.1" th:field="*{rating}" id="rating" name="rating"-->
+<!--                       class="form-control" title="Product price" th:errorclass="field-error">-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <input type="hidden" th:field="*{seller}" title="Product writer name">
+        <input type="hidden" th:field="*{imageUrl}" title="Product picture URL">
+        <input type="hidden" th:field="*{created}" title="Product creation date and time">
+        <input type="hidden" th:field="*{modified}" title="Product last modification date and time">
+
+        <div class="form-group row mb-3">
+            <label class="col-sm-2 col-form-label">Picture</label>
+            <div class="col-sm-10">
+                <div class="custom-file">
+                    <input type="file" id="file" name="file" class="custom-file-input" th:value="*{imageUrl}">
+                    <label th:text="${#strings.isEmpty(product.imageUrl)}? 'Choose file' : *{imageUrl}"
+                           class="custom-file-label" for="file">Choose picture</label>
+                </div>
+            </div>
+        </div>
+        <p th:if="${fileError != null}" class="errors alert alert-danger offset-sm-2 col-sm-10">
+            <span th:text="${fileError}"></span>
+        </p>
+
+        <div class="form-group row mb-3">
+            <div class="offset-sm-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" id="submit" name="submit" value="Save">Save</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+                <a th:href="${'/products'}" class="btn btn-secondary" id="cancel">Cancel</a>
+            </div>
+        </div>
+
+        <div class="col-xs-12 alert alert-danger" th:if="${myErrors != null}">
+            <p>Validation errors: </p>
+            <ul th:each="error: ${myErrors}">
+                <li th:text="${error}"></li>
+            </ul>
+        </div>
+    </form>
+    <div th:replace="~{fragments/foot :: foot}"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<div th:fragment="menu(path)" xmlns:th="http://www.thymeleaf.org">
+    <nav class="header-bar">
+        <ul class="navigation">
+            <div class="products">
+                <li>
+                    <a class="nav-link" th:href="@{/marketix/products}"><img src="/images/marketix.png" alt="Marketix-logo" class="logo"/></a>
+                </li>
+                <li th:class="${path == 'products'}? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:href="@{/marketix/products}">Products</a>
+                </li>
+                <li th:class="${path == 'product-form'}? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:href="@{/marketix/products/product-form}">Add Product</a>
+                </li>
+            </div>
+
+<!--            <div class="search-bar">-->
+<!--                <input type="text" placeholder="Search.." class="search">-->
+<!--            </div>-->
+
+            <div class="login-register">
+                <li th:unless="${session.user}"
+                    th:class="${path == 'auth-login'}? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:href="@{/marketix/auth/login}">Login</a>
+                </li>
+                <li th:unless="${session.user}"
+                    th:class="${path == 'auth-register'}? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:href="@{/marketix/auth/register}">Register</a>
+                </li>
+                <li th:if="${session.user}" class="nav-item">
+                <div class="dropdown" th:if="${session.user.role} == ${T(com.marketix.util.Role).ADMIN}">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Manage
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li> <a class="nav-link dropdown-item" th:href="@{/marketix/auth}">
+                            Manage users</a></li>
+                        <li><a class="nav-link dropdown-item" th:href="@{/marketix/invoices/all}">
+                            Manage invoices</a></li>
+                    </ul>
+                </div>
+                </li>
+
+                <li th:if="${session.user}" class="nav-item">
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            View
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li> <a class="nav-link dropdown-item" th:href="@{'/marketix/auth/edit/' + ${session.user.id}}">
+                                Edit account</a></li>
+                            <li><a class="nav-link dropdown-item" th:href="@{/marketix/invoices}">
+                                View invoices</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li th:if="${session.user}" class="nav-item float-right"
+                    th:class="${path == 'recipes'}? 'nav-item active' : 'nav-item'">
+                        <span class="logged-user" th:text="|Wellcome, ${session.user.name}|">
+                        </span>
+                    <a class="nav-link" th:href="@{/marketix/auth/logout}">Logout</a>
+                </li>
+
+                <li class="cart">
+                    <a class="nav-link" th:href="@{/marketix/cart}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                    </a>
+                </li>
+            </div>
+        </ul>
+    </nav>
+</div>

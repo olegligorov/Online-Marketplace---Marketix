@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Login')}">
+
+<body class="bg-dark">
+<!--<div th:replace="~{fragments/menu :: menu(${path})}"></div>-->
+<div class="container login-flex">
+    <img src="/images/marketix.png" alt="Marketix-logo" class="login-logo"/>
+    <form method="POST" class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <div class="form-group">
+            <label for="email" class="text-white font-weight-bold">Email</label>
+            <input th:value="${email}" id="email" name="email" type="text" min="2" max="50" class="form-control"
+                   placeholder="Email" />
+        </div>
+        <div class="form-group">
+            <label for="password" class="text-white font-weight-bold">Password</label>
+            <input th:value="${password}" id="password" name="password" type="password" min="2" max="20" class="form-control"
+                   placeholder="Password"/>
+        </div>
+        <!--/*@thymesVar id="errors" type="String"*/-->
+        <p th:if="${errors}" class="errors alert alert-danger" th:text="${errors}">
+            Invalid email or password.
+        </p>
+
+        <div class="login_container mt-1">
+            <div>
+                <div class="button-holder d-flex login-button">
+                    <input type="submit" class="btn btn-info btn-lg login-btn" value="Login"/>
+                </div>
+            </div>
+            <div>
+                <p class="text-white">Not a member? <a class="nav-link" th:href="@{'/marketix/auth/register'}">Sign up</a></p>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div  th:replace="fragments/foot :: foot"></div>
+</body>
+</html>

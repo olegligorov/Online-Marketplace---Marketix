@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('All Products')}">
+</head>
+<body>
+<div th:replace="~{fragments/menu :: menu(${path})}"></div>
+<div class="container">
+    <!--    <h3>Products</h3>-->
+    <section class="product-section container-lg my-5">
+        <div th:each="product, productStat : ${products}" class="product-image col card">
+            <a class="nav-link" th:href="@{'/marketix/products/' + ${product.id}}">
+                <img class="card-img-top card_image" th:src="${product.imageUrl}">
+            </a>
+            <div class="card-body">
+                <a class="nav-link" th:href="@{'/marketix/products/' + ${product.id}}">
+
+                    <h5 class="card-title" th:text="${product.name}">Product name</h5>
+                    <span class="card-text text-secondary" th:text="${product.description}">Product description</span>
+                    <p class="card-text"><strong th:text="'$' + ${product.price}">Product price</strong></p>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+<div th:replace="~{fragments/foot :: foot}"></div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Manage Users')}">
+</head>
+<body>
+<div th:replace="~{fragments/menu :: menu(${path})}"></div>
+<!--TODO-->
+<!--<div th:if="${session.user.role} == ${T(com.marketix.util.Role).ADMIN}" class="container" >-->
+<div class="container" >
+    <h3>Users</h3>
+    <table class="table custom-table m-0">
+        <thead>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Role</th>
+        <th>Caption</th>
+        <th>Modified</th>
+        <th>Image</th>
+
+        </thead>
+        <tbody>
+        <tr th:each="user, userStat : ${users}">
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.gender}"></td>
+            <td th:text="${user.role}"></td>
+            <td th:text="${user.caption}"></td>
+            <td th:text="${user.modified}"></td>
+            <td>
+                <img class="user-img-thumbnail user-image" th:src="${user.imageUrl}" >
+            </td>
+            <td>
+                <a th:href="@{'/marketix/auth/delete/' + ${user.id}}" role="button" class="btn btn-danger">X</a>
+            </td>
+            <td>
+                <a th:href="@{'/marketix/auth/edit/' + ${user.id}}" role="button" class="btn btn-info">EDIT</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="~{fragments/foot :: foot}"></div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('All Products')}">
+</head>
+<body>
+<div th:replace="~{fragments/menu :: menu(${path})}"></div>
+<div th:object="${product}" class="container product-box">
+    <div>
+        <img class="img" th:src="${product.imageUrl}">
+    </div>
+    <div>
+        <h3 th:text="${product.name}">Name</h3>
+        <p th:text="'Seller: ' + ${product.seller}"></p>
+        <p th:text="'Description: ' + ${product.description}">Description</p>
+        <div class="buy-data">
+            <h4 th:text="'$' + ${product.price}">Price</h4>
+            <a th:href="@{'/marketix/cart/add-to-cart?id=' + ${product.id}}">
+                <button  class="buy-btn">Add to cart </button>
+            </a>
+        </div>
+
+        <div th:if="${session.user}" class="remove-or-edit">
+            <a th:if="${session.user.getEmail()} == ${product.seller} or ${session.user.role} == ${T(com.marketix.util.Role).ADMIN}"
+               th:href="@{'/marketix/products/delete/' + ${product.id}}" role="button" class="btn btn-danger">Remove product</a>
+            <a th:if="${session.user.getEmail()} == ${product.seller} or ${session.user.role} == ${T(com.marketix.util.Role).ADMIN}"
+               th:href="@{'/marketix/products/edit/' + ${product.id}}" role="button" class="btn btn-info">Edit product</a>
+        </div>
+    </div>
+
+</div>
+<div th:replace="~{fragments/foot :: foot}"></div>
+</body>
+</html>

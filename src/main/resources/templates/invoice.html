@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Invoice')}">
+</head>
+<body>
+<div th:replace="~{fragments/menu :: menu(${path})}"></div>
+<div class="container">
+    <div class="row gutters">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="invoice-container">
+                        <div class="invoice-header">
+                            <!-- Row start -->
+                            <div class="row gutters">
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                                    <div class="invoice-details">
+                                        <span th:text="${invoice.user.email}">
+                                            Name
+                                        </span>
+                                        <br>
+                                        <span th:text="${invoice.streetAddress} + ', ' + ${invoice.state}">
+                                            Address, state
+                                        </span>
+                                        <br>
+                                        <span th:text="${invoice.city} + ', ' + ${invoice.zipcode}">
+                                            City, zip code
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                                    <div class="invoice-details">
+                                        <div class="invoice-num">
+                                            <div th:text="'Invoice - #' + ${invoice.id}">Invoice - #id</div>
+                                            <!--                                            TODO tuka treba data da dodadam -->
+                                            <div th:text="${invoice.created}">January 10th 2020</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Row end -->
+                        </div>
+                        <div class="invoice-body">
+                            <!-- Row start -->
+                            <div class="row gutters">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table m-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Items</th>
+                                                <th>Product ID</th>
+                                                <th>Quantity</th>
+                                                <th>Sub Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="cartItem, cartItemStat : ${invoice.cartItems}">
+                                                <td th:text="${cartItem.productName}">
+                                                    Name
+                                                    <p class="m-0 text-muted" th:text="${cartItem.productDescription}">
+                                                        Description
+                                                    </p>
+                                                </td>
+                                                <td th:text="'#' + ${cartItem.productId}">#50000981</td>
+                                                <td th:text="${cartItem.quantity}">9</td>
+                                                <td th:text="'$'+${cartItem.totalPrice}">$5000.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>
+                                                    <p>
+                                                        Subtotal<br>
+                                                    </p>
+                                                    <h5 class="text-success"><strong>Grand Total</strong></h5>
+                                                </td>
+                                                <td>
+                                                    <p th:text="'$'+${invoice.totalPrice}">
+                                                        $5000.00
+                                                    </p>
+                                                    <h5 class="text-success" th:text="'$'+${invoice.totalPrice}">
+                                                        <strong>$5150.99</strong></h5>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Row end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/foot :: foot}"></div>
+</body>
+</html>
